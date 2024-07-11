@@ -1,6 +1,7 @@
 """Models file"""
 
 from pydantic import BaseModel, Field
+from products.constants import InventoryStatusEnum
 
 
 class Product(BaseModel):
@@ -12,7 +13,7 @@ class Product(BaseModel):
     description: str
     price: int
     quantity: int
-    inventory_status: str = Field(alias="inventoryStatus")
+    inventory_status: InventoryStatusEnum = Field(alias="inventoryStatus")
     category: str
     image: str | None = None
     rating: int | None = None
@@ -31,7 +32,7 @@ class ProductToUpdate(BaseModel):
     description: str | None = None
     price: int | None = None
     quantity: int | None = None
-    inventory_status: str | None = Field(alias="inventoryStatus", default=None)
+    inventory_status: InventoryStatusEnum | None = Field(alias="inventoryStatus", default=None)
     category: str | None = None
     image: str | None = None
     rating: int | None = None

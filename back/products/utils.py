@@ -2,8 +2,10 @@
 
 import json
 from products.constants import PRODUCT_DATABASE_FILEPATH
+from pydantic import validate_call
 
 
+@validate_call
 def load_products_database() -> list[dict]:
     """Load products from database
 
@@ -15,6 +17,7 @@ def load_products_database() -> list[dict]:
         return json_file["data"]
 
 
+@validate_call
 def save_products_database(new_data: list[dict]):
     """Save products into database
 

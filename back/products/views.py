@@ -3,12 +3,13 @@
 from flask import Blueprint, request
 from products.utils import load_products_database, save_products_database
 from products.models import Product, ProductToUpdate
-from pydantic import ValidationError
+from pydantic import ValidationError, validate_call
 
 products_blueprint = Blueprint("products_blueprint", __name__)
 
 
 @products_blueprint.route(methods=["GET"], rule="/")
+@validate_call
 def get_products() -> tuple[list, str]:
     """Get all products
 
@@ -19,6 +20,7 @@ def get_products() -> tuple[list, str]:
 
 
 @products_blueprint.route(methods=["POST"], rule="/")
+@validate_call
 def create_product() -> tuple[dict | str, str]:
     """Create a new product
 
@@ -44,6 +46,7 @@ def create_product() -> tuple[dict | str, str]:
 
 
 @products_blueprint.route(methods=["PATCH"], rule="/<int:product_id>")
+@validate_call
 def update_product(product_id: int) -> tuple[dict | str, str]:
     """Update an existing product
 
@@ -70,6 +73,7 @@ def update_product(product_id: int) -> tuple[dict | str, str]:
 
 
 @products_blueprint.route(methods=["GET"], rule="/<int:product_id>")
+@validate_call
 def get_product(product_id: int) -> tuple[dict | str, str]:
     """Get a specific product
 
@@ -87,6 +91,7 @@ def get_product(product_id: int) -> tuple[dict | str, str]:
 
 
 @products_blueprint.route(methods=["DELETE"], rule="/<int:product_id>")
+@validate_call
 def delete_product(product_id: int) -> tuple[str, str]:
     """Delete a specific product
 

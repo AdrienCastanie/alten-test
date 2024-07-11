@@ -395,18 +395,6 @@
             "category": "Fitness",
             "image": "yoga-set.png",
             "rating": 8
-        },
-        {
-            "id": 5001,
-            "code": "gwuby345v",
-            "name": "Yoga Set",
-            "description": "Product Description",
-            "price": 20,
-            "quantity": 25,
-            "inventoryStatus": "INSTOCK",
-            "category": "Fitness",
-            "image": "yoga-set.png",
-            "rating": 8
         }
     ]
 }

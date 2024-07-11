@@ -19,13 +19,13 @@ paths:
       operationId: getProducts
       parameters: []
       responses:
-        '200':
+        200:
           description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Products'
-        '404':
+        404:
           description: Products not found
     post:
       tags:
@@ -33,22 +33,24 @@ paths:
       summary: Create a new product
       description: Create a new product
       operationId: postProducts
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Product updated"
+      requestBody:
+        description: Product to create
         required: true
-        schema:
-          $ref: '#/components/schemas/Product'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
       responses:
-        '201':
+        201:
           description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        '400':
-          description: Products not found
+        409:
+          description: "Id already exists"
+        422:
+          description: "Invalid input"
   /products/{product_id}:
     get:
       tags:
@@ -73,7 +75,7 @@ paths:
     patch:
       tags:
       - "products"
-      summary: "Updates a product"
+      summary: "Update a product"
       description: "Update a product"
       operationId: "updateProduct"
       parameters:
@@ -83,21 +85,24 @@ paths:
         required: true
         type: "integer"
         format: "int64"
-      - in: "body"
-        name: "body"
-        description: "Product updated"
+      requestBody:
+        description: Product to update
         required: true
-        schema:
-          $ref: '#/components/schemas/Product'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductToUpdate'
       responses:
         200:
           description: "Successful operation"
-        405:
+        404:
+          description: "Product not found"
+        422:
           description: "Invalid input"
     delete:
       tags:
       - "products"
-      summary: "Deletes a product"
+      summary: "Delete a product"
       description: "Delete a product"
       operationId: "deleteProduct"
       parameters:
@@ -110,8 +115,6 @@ paths:
       responses:
         200:
           description: "Successful operation"
-        400:
-          description: "Invalid ID supplied"
         404:
           description: "Product not found"
 components:
@@ -136,6 +139,44 @@ components:
           type: integer
           format: int64
           example: 1029
+        code:
+          type: string
+          example: gwuby345v
+        name:
+          type: string
+          example: Yoga Set
+        description:
+          type: string
+          example: Product Description
+        price:
+          type: integer
+          format: int64
+          example: 20
+        quantity:
+          type: integer
+          format: int64
+          example: 25
+        inventoryStatus:
+          type: string
+          description: products inventory status
+          enum:
+            - INSTOCK
+            - LOWSTOCK
+            - OUTOFSTOCK
+          example: INSTOCK
+        category:
+          type: string
+          example: Fitness
+        image:
+          type: string
+          example: "yoga-set.png"
+        rating:
+          type: integer
+          format: int64
+          example: 8
+    ProductToUpdate:
+      type: object
+      properties:
         code:
           type: string
           example: gwuby345v
